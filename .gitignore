@@ -1,0 +1,6 @@
+intelitech-md
+*.pyc
+.DS_Store
+.Python
+.vscode/
+bin/
