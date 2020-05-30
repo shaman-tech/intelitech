@@ -15,3 +15,5 @@ def detect_intent(text, session_id, language_code='en'):
 def fetch_reply(query, session_id):
     response = detect_intent(query,session_id)
     return response.fulfillment_text
+
+    
