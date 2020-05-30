@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 import logging
 import json
+import string
+import random
 from zoomus import ZoomClient, components
 from datetime import datetime
 from constants import LOG_FILENAME, INTELITECH_API_KEY, INTELITECH_API_SECRET, INTELITECH_HOST_ID
@@ -13,18 +15,13 @@ logging.basicConfig(filename=LOG_FILENAME, filemode='w',
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 
+def password_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
 @app.route('/')
 def landing_page():
     """Return landing page."""
     return render_template('landing_page.html')
-
-tsj = {
-  "name":"Peter Gordon",
-  "age": "30",
-  "email": "gordon.peter33@gmail.com",
-  "appt_date": "06-3-20",
-  "appt_time": "10:30 AM"
-}
 
 client = ZoomClient(INTELITECH_API_KEY, INTELITECH_API_SECRET)
 
@@ -37,21 +34,21 @@ def create_meeting():
     time_array[1] = mins[0]
     if mins[1] == 'PM':
         time_array[0] = int(time_array[0]) + 12
-    date_time = datetime(2020, int(date_array[0]),int(date_array[1]),int(time_array[0]),int(time_array[1]),0)
+    date_time = datetime(2020, int(date_array[1]), int(date_array[0]), int(time_array[0]),int(time_array[1]),0)
     meeting = client.meeting.create(
         user_id=INTELITECH_HOST_ID,
         meeting_type=2,
         start_time= date_time,
         duration=20,
         timezone='America/Chicago',
-        password='pawpeq',
+        password=password_generator(),
         topic=f'Consultation with {req_data["name"]}, age {req_data["age"]}',
         settings={
-            "auto_recording":True,
+            "auto_recording":"True",
             "host_video":True,
             "participant_video":True,
         },
-        
+        registrants_email_notification=True,
         agenda=f'{req_data["agenda"]}'
     )
 
