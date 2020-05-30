@@ -1,8 +1,7 @@
-intelitech-md
-*.pyc
-.DS_Store
+.vscode
+bin
 .Python
-.vscode/
-bin/
-lib/python2.7
-include/python2.7
+credentials.pyc
+intelitech-md2.7
+.DS_Store
+intelitech.md
