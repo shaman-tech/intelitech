@@ -24,6 +24,9 @@ def whatsapp_reply():
   return str(resp)
 
 
+@app.route("/test")
+def parse_json():
+      resp = 
 
 if __name__ == "__main__":
   app.run()
